@@ -6,9 +6,12 @@ var connections = [];
 app.use(express.static('./public'));
 app.use(express.static('./node_modules/bootstrap/dist'));
 
-var server = app.listen(3000);
-var io = require('socket.io').listen(server);
+var server = app.listen(process.env.PORT || 3000, function() {
+	console.log('Express Server running on port %s', this.address().port);
+});
 
+// Socket.io Setup
+var io = require('socket.io').listen(server);
 io.sockets.on('connection', function(socket) {
 
 	socket.once('disconnect', function () {
@@ -20,5 +23,3 @@ io.sockets.on('connection', function(socket) {
 	connections.push(socket);
 	console.log('Number of sockets connected: %s', connections.length);
 });
-
-console.log('Polling app running on port : 3000');
