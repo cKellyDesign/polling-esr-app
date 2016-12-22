@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "A polling web application utilizing React.js, Express.js, Socket.io, and Webpack.",
   "main": "app-server.js",
+  "engines": {
+    "node": "6.3.1",
+    "npm": "3.10.3"
+  },
   "scripts": {
     "prestart": "webpack",
     "start": "node app-server.js"
