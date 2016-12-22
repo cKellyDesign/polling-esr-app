@@ -4,6 +4,8 @@ import _ from 'underscore';
 
 import Header from './parts/Header';
 
+var ioAddressString = window.location.href.indexOf('localhost') !== -1 ? 'http://localhost:3000' : 'http://polling-esr-app.herokuapp.com/';
+
 var App = React.createClass({
 
 	getInitialState() {
@@ -13,7 +15,7 @@ var App = React.createClass({
 	},
 
 	componentWillMount() {
-		this.socket = io('http://localhost:3000');
+		this.socket = io(ioAddressString);
 		this.socket.on('connect', _.bind(this.connect, this));
 		this.socket.on('disconnect', _.bind(this.disconnect, this));
 	},

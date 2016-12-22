@@ -19828,6 +19828,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var ioAddressString = window.location.href.indexOf('localhost') !== -1 ? 'http://localhost:3000' : 'http://polling-esr-app.herokuapp.com/';
+
 	var App = _react2.default.createClass({
 		displayName: 'App',
 		getInitialState: function getInitialState() {
@@ -19836,7 +19838,7 @@
 			};
 		},
 		componentWillMount: function componentWillMount() {
-			this.socket = (0, _socket2.default)('http://localhost:3000');
+			this.socket = (0, _socket2.default)(ioAddressString);
 			this.socket.on('connect', _underscore2.default.bind(this.connect, this));
 			this.socket.on('disconnect', _underscore2.default.bind(this.disconnect, this));
 		},
