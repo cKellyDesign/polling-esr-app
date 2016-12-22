@@ -8,6 +8,10 @@
   },
   "author": "Conor Kelly",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url" : "https://github.com/cKellyDesign/polling-esr-app.git"
+  },
   "dependencies": {
     "bootstrap": "^3.3.7",
     "express": "^4.14.0",
