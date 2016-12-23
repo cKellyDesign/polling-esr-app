@@ -10,14 +10,16 @@ var App = React.createClass({
 
 	getInitialState() {
 		return {
-			status: 'disconnected'
+			status: 'disconnected',
+			title: ''
 		}
 	},
 
 	componentWillMount() {
 		this.socket = io(ioAddressString);
 		this.socket.on('connect', _.bind(this.connect, this));
-		this.socket.on('disconnect', _.bind(this.disconnect, this));
+		this.socket.on('connect', _.bind(this.connect, this));
+		this.socket.on('welcome', _.bind(this.welcome, this));
 	},
 
 	connect() {
@@ -28,8 +30,12 @@ var App = React.createClass({
 		this.setState({ status: 'disconnected' });
 	},
 
+	welcome(serverState) {
+		this.setState({ title: serverState.title });
+	},
+
 	render() {
-		return <div><Header title="New Header" status={this.state.status} /></div>;
+		return <div><Header title={this.state.title} status={this.state.status} /></div>;
 	}
 
 });

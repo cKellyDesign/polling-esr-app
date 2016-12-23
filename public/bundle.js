@@ -19834,13 +19834,15 @@
 		displayName: 'App',
 		getInitialState: function getInitialState() {
 			return {
-				status: 'disconnected'
+				status: 'disconnected',
+				title: ''
 			};
 		},
 		componentWillMount: function componentWillMount() {
 			this.socket = (0, _socket2.default)(ioAddressString);
 			this.socket.on('connect', _underscore2.default.bind(this.connect, this));
-			this.socket.on('disconnect', _underscore2.default.bind(this.disconnect, this));
+			this.socket.on('connect', _underscore2.default.bind(this.connect, this));
+			this.socket.on('welcome', _underscore2.default.bind(this.welcome, this));
 		},
 		connect: function connect() {
 			this.setState({ status: 'connected' });
@@ -19848,11 +19850,14 @@
 		disconnect: function disconnect() {
 			this.setState({ status: 'disconnected' });
 		},
+		welcome: function welcome(serverState) {
+			this.setState({ title: serverState.title });
+		},
 		render: function render() {
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(_Header2.default, { title: 'New Header', status: this.state.status })
+				_react2.default.createElement(_Header2.default, { title: this.state.title, status: this.state.status })
 			);
 		}
 	});
