@@ -52,7 +52,7 @@ io.sockets.on('connection', function (socket) {
 
 		this.emit('joined', newMember);
 		audience.push(newMember);
-		io.sockets.emit('audience', { audience : audience });
+		io.sockets.emit('audience', audience);
 	});
 
 	socket.on('start', function (payload) {

@@ -77,6 +77,7 @@ var App = React.createClass({
 
 	render() {
 		// var thisState = this.state
+		console.log(this.state);
 		return (
 			<div>
 				<Header {...this.state} />
