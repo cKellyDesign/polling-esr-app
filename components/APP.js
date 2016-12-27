@@ -35,7 +35,12 @@ var App = React.createClass({
 	},
 
 	render() {
-		return <div><Header title={this.state.title} status={this.state.status} /></div>;
+		return (
+			<div>
+				<Header title={this.state.title} status={this.state.status} />
+				{this.props.children}
+			</div>
+		);
 	}
 
 });

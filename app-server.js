@@ -14,7 +14,7 @@ var server = app.listen(process.env.PORT || 3000, function() {
 
 // Socket.io Setup
 var io = require('socket.io').listen(server);
-io.sockets.on('connection', function(socket) {
+io.sockets.on('connection', function (socket) {
 
 	socket.once('disconnect', function () {
 		connections.splice(connections.indexOf(socket), 1);
