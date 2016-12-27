@@ -14,6 +14,7 @@ var App = React.createClass({
 			title: '',
 			member: {},
 			audience: [],
+			speaker: '',
 			emit: this.emit
 		}
 	},
@@ -22,23 +23,31 @@ var App = React.createClass({
 		this.socket = io(ioAddressString);
 		this.socket.on('connect', _.bind(this.connect, this));
 		this.socket.on('disconnect', _.bind(this.disconnect, this));
-		this.socket.on('welcome', _.bind(this.welcome, this));
+		this.socket.on('welcome', _.bind(this.updateState, this));
 		this.socket.on('joined', _.bind(this.joined, this));
 		this.socket.on('audience', _.bind(this.updateAudience, this));
+		this.socket.on('start', _.bind(this.start, this));
+		this.socket.on('end', _.bind(this.updateState, this));
 	},
 
 	connect() {
 		var member = (sessionStorage.member) ? JSON.parse(sessionStorage.member): null;
 		
-		if (member) {
+		if (member && member.type === 'audience') {
 			this.emit('join', member);
+		} else if (member && member.type === 'speaker') {
+			this.emit('start', { name: member.name, title: sessionStorage.title });
 		}
 
 		this.setState({ status: 'connected' });
 	},
 
 	disconnect() {
-		this.setState({ status: 'disconnected' });
+		this.setState({
+			status: 'disconnected',
+			title: 'disconnected',
+			speaker: ''
+		});
 	},
 
 	joined(member) {
@@ -50,8 +59,16 @@ var App = React.createClass({
 		this.setState({ audience: newAudience });
 	},
 
-	welcome(serverState) {
-		this.setState({ title: serverState.title });
+	start(presentation){
+		if (this.state.member.type === 'speaker') {
+			sessionStorage.title = presentation.title;
+		}
+		this.setState(presentation);
+	},
+
+	updateState(serverState) {
+		console.log('ServerState: ', serverState);
+		this.setState(serverState);
 	},
 
 	emit(eventName, payload){
@@ -62,7 +79,7 @@ var App = React.createClass({
 		// var thisState = this.state
 		return (
 			<div>
-				<Header title={this.state.title} status={this.state.status} />
+				<Header {...this.state} />
 				{ this.props.children && React.cloneElement(this.props.children, this.state) }
 			</div>
 		);
