@@ -18,6 +18,7 @@ var APP = require('./components/APP');
 var Audience = require('./components/Audience');
 var Board = require('./components/Board');
 var Speaker = require('./components/Speaker');
+var Whoops404 = require('./components/Whoops404');
 
 // Route Setup
 var routes = (
@@ -26,6 +27,7 @@ var routes = (
 			<IndexRoute component={Audience} />
 		  <Route path="speaker" component={Speaker} />
 		  <Route path="board" component={Board} />
+		  <Route path="*" status={404} component={Whoops404} />
   	</Route>
 	</Router>
 );

@@ -72,6 +72,7 @@
 	var Audience = __webpack_require__(272);
 	var Board = __webpack_require__(273);
 	var Speaker = __webpack_require__(274);
+	var Whoops404 = __webpack_require__(275);
 
 	// Route Setup
 	var routes = _react2.default.createElement(
@@ -82,7 +83,8 @@
 			{ path: '/', component: APP },
 			_react2.default.createElement(_reactRouter.IndexRoute, { component: Audience }),
 			_react2.default.createElement(_reactRouter.Route, { path: 'speaker', component: Speaker }),
-			_react2.default.createElement(_reactRouter.Route, { path: 'board', component: Board })
+			_react2.default.createElement(_reactRouter.Route, { path: 'board', component: Board }),
+			_react2.default.createElement(_reactRouter.Route, { path: '*', status: 404, component: Whoops404 })
 		)
 	);
 
@@ -25099,11 +25101,6 @@
 			this.setState({ title: serverState.title });
 		},
 		render: function render() {
-			// var thisState = this.state;
-			// for (var props in this.state) {
-
-			// }
-
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -35444,6 +35441,57 @@
 	});
 
 	module.exports = Speaker;
+
+/***/ },
+/* 275 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(159);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Whoops404 = _react2.default.createClass({
+		displayName: 'Whoops404',
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				{ id: 'not-found' },
+				_react2.default.createElement(
+					'h1',
+					null,
+					'Whoops, 404 : Page Not Found'
+				),
+				_react2.default.createElement(
+					'p',
+					null,
+					'We cannot find the page you have requested! Were you looking for one of these?'
+				),
+				_react2.default.createElement(
+					_reactRouter.Link,
+					{ to: '/' },
+					'Join us as an Audience'
+				),
+				_react2.default.createElement(
+					_reactRouter.Link,
+					{ to: '/speaker' },
+					'Start a Presentation'
+				),
+				_react2.default.createElement(
+					_reactRouter.Link,
+					{ to: '/board' },
+					'View the Board'
+				)
+			);
+		}
+	});
+
+	module.exports = Whoops404;
 
 /***/ }
 /******/ ]);
