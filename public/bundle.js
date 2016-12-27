@@ -25079,7 +25079,8 @@
 		getInitialState: function getInitialState() {
 			return {
 				status: 'disconnected',
-				title: ''
+				title: '',
+				dance: 'hell ya'
 			};
 		},
 		componentWillMount: function componentWillMount() {
@@ -25098,11 +25099,16 @@
 			this.setState({ title: serverState.title });
 		},
 		render: function render() {
+			// var thisState = this.state;
+			// for (var props in this.state) {
+
+			// }
+
 			return _react2.default.createElement(
 				'div',
 				null,
 				_react2.default.createElement(_Header2.default, { title: this.state.title, status: this.state.status }),
-				this.props.children
+				this.props.children && _react2.default.cloneElement(this.props.children, this.state)
 			);
 		}
 	});
@@ -35387,7 +35393,8 @@
 			return React.createElement(
 				'h1',
 				null,
-				'Audience'
+				'Audience : ',
+				this.props.title
 			);
 		}
 	});
@@ -35408,7 +35415,8 @@
 			return React.createElement(
 				'h1',
 				null,
-				'Board'
+				'Board : ',
+				this.props.dance
 			);
 		}
 	});
@@ -35429,7 +35437,8 @@
 			return React.createElement(
 				'h1',
 				null,
-				'Speaker'
+				'Speaker : ',
+				this.props.status
 			);
 		}
 	});
