@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { hashHistory, Router, Route, IndexRoute, Link } from 'react-router';
+import { browserHistory, hashHistory, Router, Route, IndexRoute, Link } from 'react-router';
 
 // React Import
 // var React = require('react');
@@ -22,7 +22,7 @@ var Whoops404 = require('./components/Whoops404');
 
 // Route Setup
 var routes = (
-	<Router history={hashHistory}>
+	<Router history={browserHistory}>
 		<Route path="/" component={APP}>
 			<IndexRoute component={Audience} />
 		  <Route path="speaker" component={Speaker} />
