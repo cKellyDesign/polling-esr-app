@@ -25087,6 +25087,7 @@
 				speaker: '',
 				questions: [],
 				currentQuestion: false,
+				results: {},
 				emit: this.emit
 			};
 		},
@@ -25100,6 +25101,7 @@
 			this.socket.on('start', _underscore2.default.bind(this.start, this));
 			this.socket.on('end', _underscore2.default.bind(this.updateState, this));
 			this.socket.on('ask', _underscore2.default.bind(this.ask, this));
+			this.socket.on('results', _underscore2.default.bind(this.updateResults, this));
 		},
 		connect: function connect() {
 			var member = sessionStorage.member ? JSON.parse(sessionStorage.member) : null;
@@ -25143,9 +25145,11 @@
 			sessionStorage.answer = '';
 			this.setState({ currentQuestion: question });
 		},
+		updateResults: function updateResults(data) {
+			this.setState({ results: data });
+		},
 		render: function render() {
 			// var thisState = this.state
-			console.log(this.state);
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -35557,7 +35561,12 @@
 				React.createElement(
 					_reactRouter.Link,
 					{ to: '/speaker' },
-					'Join as spaker'
+					'Join the Presentation'
+				),
+				React.createElement(
+					_reactRouter.Link,
+					{ to: '/board' },
+					'Go to the Board'
 				)
 			);
 		}
@@ -35662,15 +35671,37 @@
 	'use strict';
 
 	var React = __webpack_require__(1);
+	var Display = __webpack_require__(273);
 
 	var Board = React.createClass({
 		displayName: 'Board',
 		render: function render() {
 			return React.createElement(
-				'h1',
-				null,
-				'Board : ',
-				this.props.dance
+				'div',
+				{ id: 'scoreboard' },
+				React.createElement(
+					Display,
+					{ 'if': this.props.status === 'connected' && this.props.currentQuestion },
+					React.createElement(
+						'h3',
+						null,
+						this.props.currentQuestion.q
+					),
+					React.createElement(
+						'p',
+						null,
+						JSON.stringify(this.props.results)
+					)
+				),
+				React.createElement(
+					Display,
+					{ 'if': this.props.status === 'connected' && !this.props.currentQuestion },
+					React.createElement(
+						'h3',
+						null,
+						'Awaiting Question....'
+					)
+				)
 			);
 		}
 	});
