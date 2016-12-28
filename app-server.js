@@ -6,6 +6,14 @@ var app = express();
 var connections = [];
 var audience = [];
 var speaker = {};
+var questions = require('./app-questions');
+var currentQuestion = false;
+var results = {
+	a: 0,
+	b: 0,
+	c: 0,
+	d: 0
+};
 
 var title = 'Untitled Presentation';
 
@@ -64,10 +72,24 @@ io.sockets.on('connection', function (socket) {
 		io.sockets.emit('start', {title: title, speaker: speaker.name});
 	});
 
+	socket.on('ask', function (question) {
+		currentQuestion = question;
+		results = { a:0, b:0, c:0, d:0 };
+		io.sockets.emit('ask', currentQuestion);
+		console.log('QUestion asked: %s', currentQuestion.q);
+	});
+
+	socket.on('answer', function (payload) {
+		results[payload.choice]++;
+		console.log('Answer: "%s" - "%j"', payload.choice, results);
+	});
+
 	socket.emit('welcome', {
 		title: title,
 		audience: audience,
-		speaker: speaker.name
+		speaker: speaker.name,
+		questions: questions,
+		currentQuestion: currentQuestion
 	});
 
 	connections.push(socket);
